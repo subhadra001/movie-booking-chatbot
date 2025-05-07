@@ -95,7 +95,7 @@ export default function MovieChat() {
               />
             )}
             
-            {message.sender === 'agent' && message.type === 'booking_confirmation' && bookingConfirmed && (
+            {message.sender === 'agent' && message.type === 'booking_confirmation' && (
               <>
                 <BookingSummary 
                   movie={currentMovie} 

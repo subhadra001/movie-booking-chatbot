@@ -194,6 +194,7 @@ export function useChat() {
     // Simulate bot response with a delay
     setTimeout(() => {
       setIsTyping(false);
+      setBookingConfirmed(true);
       addBotMessage(
         `Great! Here's your booking summary:`,
         'booking_confirmation',

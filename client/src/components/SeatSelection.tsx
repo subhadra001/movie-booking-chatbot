@@ -29,7 +29,7 @@ export default function SeatSelection({
   
   // Organize seats into a grid by row
   useEffect(() => {
-    if (seats) {
+    if (seats && Array.isArray(seats)) {
       const grid: Record<string, Seat[]> = {};
       const rowList: string[] = [];
       
@@ -93,9 +93,9 @@ export default function SeatSelection({
           
           {/* Rows with seats */}
           {rows.map(row => (
-            <>
+            <div key={`row-${row}`} className="contents">
               {/* Row label */}
-              <div key={`row-${row}`} className="text-xs text-gray-500 flex items-center justify-center">
+              <div className="text-xs text-gray-500 flex items-center justify-center">
                 {row}
               </div>
               
@@ -114,7 +114,7 @@ export default function SeatSelection({
                   {seat.number}
                 </div>
               ))}
-            </>
+            </div>
           ))}
         </div>
         
