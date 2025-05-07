@@ -109,11 +109,11 @@ export function useChat() {
         {
           movie,
           showtimes: [
-            { id: 1, movieId: movie.id, theaterId: 1, time: "10:30 AM", date: "2023-06-15" },
-            { id: 2, movieId: movie.id, theaterId: 1, time: "1:15 PM", date: "2023-06-15" },
-            { id: 3, movieId: movie.id, theaterId: 1, time: "4:45 PM", date: "2023-06-15" },
-            { id: 4, movieId: movie.id, theaterId: 1, time: "7:30 PM", date: "2023-06-15" },
-            { id: 5, movieId: movie.id, theaterId: 1, time: "10:15 PM", date: "2023-06-15" }
+            { id: 1, movieId: movie.id, theaterId: 1, time: "10:30 AM", date: new Date().toISOString().split('T')[0] },
+            { id: 2, movieId: movie.id, theaterId: 1, time: "1:15 PM", date: new Date().toISOString().split('T')[0] },
+            { id: 3, movieId: movie.id, theaterId: 1, time: "4:45 PM", date: new Date().toISOString().split('T')[0] },
+            { id: 4, movieId: movie.id, theaterId: 1, time: "7:30 PM", date: new Date().toISOString().split('T')[0] },
+            { id: 5, movieId: movie.id, theaterId: 1, time: "10:15 PM", date: new Date().toISOString().split('T')[0] }
           ]
         }
       );

@@ -27,7 +27,15 @@ export default function BookingSummary({
     if (!showtime) return 'Today';
     
     const date = new Date(showtime.date);
-    return `Today, ${date.toLocaleString('default', { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`;
+    const now = new Date();
+    
+    // Check if the date is today
+    if (date.toDateString() === now.toDateString()) {
+      return `Today, ${date.toLocaleString('default', { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`;
+    }
+    
+    // Format date normally
+    return `${date.toLocaleString('default', { weekday: 'long' })}, ${date.toLocaleString('default', { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`;
   };
   
   return (
