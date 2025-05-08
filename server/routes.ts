@@ -184,6 +184,76 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: error.message });
     }
   });
+  
+  // Simulated payment processing endpoint
+  app.post(`${apiPrefix}/create-payment-intent`, async (req: Request, res: Response) => {
+    try {
+      const { amount } = req.body;
+      
+      if (!amount) {
+        return res.status(400).json({ message: "Amount is required" });
+      }
+      
+      // Simulate Stripe's response structure with a fake client secret
+      // In real Stripe, this would be a real client secret from the Stripe API
+      const paymentIntent = {
+        id: `pi_${Math.random().toString(36).substring(2, 15)}`,
+        client_secret: `pi_${Math.random().toString(36).substring(2, 15)}_secret_${Math.random().toString(36).substring(2, 15)}`,
+        amount,
+        currency: "usd",
+        status: "requires_payment_method"
+      };
+      
+      // Simulate a slight delay to mimic an API call
+      setTimeout(() => {
+        res.json({ clientSecret: paymentIntent.client_secret });
+      }, 500);
+      
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+  
+  // Simulated payment confirmation endpoint
+  app.post(`${apiPrefix}/confirm-payment`, async (req: Request, res: Response) => {
+    try {
+      const { paymentIntentId, bookingId } = req.body;
+      
+      if (!bookingId) {
+        return res.status(400).json({ message: "Booking ID is required" });
+      }
+      
+      const booking = await storage.getBooking(parseInt(bookingId));
+      
+      if (!booking) {
+        return res.status(404).json({ message: "Booking not found" });
+      }
+      
+      // Update booking status to completed
+      const updatedBooking = await storage.updateBookingStatus(parseInt(bookingId), "completed");
+      
+      // Simulate successful payment
+      const paymentConfirmation = {
+        id: paymentIntentId || `pi_${Math.random().toString(36).substring(2, 15)}`,
+        status: "succeeded",
+        amount: booking.totalPrice,
+        currency: "usd",
+        receipt_number: `RCPT-${Math.floor(Math.random() * 1000000)}`
+      };
+      
+      // Send response after a small delay to simulate processing
+      setTimeout(() => {
+        res.json({
+          success: true,
+          payment: paymentConfirmation,
+          booking: updatedBooking
+        });
+      }, 700);
+      
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
 
   // Search movies by title or genre
   app.get(`${apiPrefix}/search/movies`, async (req: Request, res: Response) => {

@@ -232,7 +232,8 @@ export class MemStorage implements IStorage {
     const booking: Booking = { 
       ...insertBooking, 
       id,
-      status: insertBooking.status || 'pending',
+      // Default to 'pending' if no status is provided
+      status: 'pending',
       createdAt: new Date() 
     };
     this.bookings.set(id, booking);

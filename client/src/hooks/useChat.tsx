@@ -3,6 +3,7 @@ import { useMutation } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { delay, extractMovieTitle } from '@/lib/utils';
 import { MessageType, Movie, Theater, Showtime, Seat } from '@/types';
+import { useLocation } from 'wouter';
 
 export function useChat() {
   const [messages, setMessages] = useState<MessageType[]>([
@@ -185,23 +186,57 @@ export function useChat() {
     });
   }, [ticketQuantity]);
   
+  const [, setLocation] = useLocation();
+  const createBookingMutation = useMutation({
+    mutationFn: async (bookingData: any) => {
+      const response = await apiRequest('POST', '/api/bookings', bookingData);
+      return response.json();
+    }
+  });
+
   // Handle seat confirmation
   const handleSeatConfirm = useCallback(() => {
+    if (!currentShowtime || selectedSeats.length === 0) return;
+    
     // Simulate user confirming seats
     addUserMessage(`Those seats look perfect!`);
     setIsTyping(true);
     
-    // Simulate bot response with a delay
-    setTimeout(() => {
-      setIsTyping(false);
-      setBookingConfirmed(true);
-      addBotMessage(
-        `Great! Here's your booking summary:`,
-        'booking_confirmation',
-        {}
-      );
-    }, 1000);
-  }, [addUserMessage, addBotMessage]);
+    // Calculate total price ($15 per ticket)
+    const totalPrice = selectedSeats.length * 1500; // $15.00 per ticket, stored in cents
+    
+    // Create actual booking
+    createBookingMutation.mutate({
+      showtimeId: currentShowtime.id,
+      seatIds: selectedSeats.map(seat => seat.id.toString()),
+      totalPrice
+    }, {
+      onSuccess: (booking) => {
+        setIsTyping(false);
+        setBookingConfirmed(true);
+        
+        // Add bot message with booking details
+        addBotMessage(
+          `Great! Here's your booking summary. To complete your purchase, I'll take you to the secure checkout page.`,
+          'booking_confirmation',
+          { bookingId: booking.id }
+        );
+        
+        // Redirect to checkout page
+        setTimeout(() => {
+          setLocation(`/checkout/${booking.id}`);
+        }, 2000);
+      },
+      onError: (error) => {
+        setIsTyping(false);
+        addBotMessage(
+          `I'm sorry, there was an error with your booking. Please try again.`,
+          'error',
+          {}
+        );
+      }
+    });
+  }, [addUserMessage, addBotMessage, currentShowtime, selectedSeats, setLocation, createBookingMutation]);
   
   // Handle booking confirmation
   const handleBookingConfirm = useCallback(() => {
