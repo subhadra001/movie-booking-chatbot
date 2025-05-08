@@ -24,7 +24,11 @@ export default function BookingSummary({
   
   // Format date to display nicely
   const formatDate = () => {
-    if (!showtime) return 'Today';
+    if (!showtime) {
+      // Use today's date if showtime is not available
+      const today = new Date();
+      return `Today, ${today.toLocaleString('default', { month: 'long' })} ${today.getDate()}, ${today.getFullYear()}`;
+    }
     
     const date = new Date(showtime.date);
     const now = new Date();
