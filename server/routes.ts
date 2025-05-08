@@ -194,6 +194,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Simple NLP to understand common user intents
       const lowerMessage = message.toLowerCase();
       
+      // Check for "movies near me" query
+      if (lowerMessage.includes("near me") || 
+          (lowerMessage.includes("movie") && lowerMessage.includes("near")) ||
+          (lowerMessage.includes("theater") && lowerMessage.includes("near"))) {
+        
+        const movies = await storage.getMovies();
+        
+        return res.json({
+          type: "movie_results",
+          message: "I found these movies playing at theaters near you:",
+          data: movies.slice(0, 3)
+        });
+      }
+      
+      // Check for "new releases" query
+      if (lowerMessage.includes("new releases") || 
+          lowerMessage.includes("latest movies") ||
+          lowerMessage.includes("just released")) {
+        
+        const movies = await storage.getMovies();
+        // Sort by newest release year
+        const sortedMovies = [...movies].sort((a, b) => b.releaseYear - a.releaseYear);
+        
+        return res.json({
+          type: "movie_results",
+          message: "Here are the latest movie releases:",
+          data: sortedMovies.slice(0, 3)
+        });
+      }
+      
+      // Check for "popular movies" query
+      if (lowerMessage.includes("popular movies") || 
+          lowerMessage.includes("top movies") ||
+          lowerMessage.includes("best movies")) {
+        
+        const movies = await storage.getMovies();
+        
+        return res.json({
+          type: "movie_results",
+          message: "Here are some popular movies in theaters now:",
+          data: movies.slice(0, 3)
+        });
+      }
+      
       // Check for movie browsing intent
       if (lowerMessage.includes("watch") || lowerMessage.includes("movie") || lowerMessage.includes("show")) {
         // Extract potential movie titles or genres

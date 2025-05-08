@@ -124,7 +124,7 @@ export default function MovieChat() {
                 options={[
                   { text: 'New releases', onClick: () => sendMessage('Show me new releases') },
                   { text: 'Popular movies', onClick: () => sendMessage('Show me popular movies') },
-                  { text: 'Movies near me', onClick: () => sendMessage('Show movies near me') }
+                  { text: 'Movies near me', onClick: () => sendMessage('Movies near me') }
                 ]}
               />
             )}
