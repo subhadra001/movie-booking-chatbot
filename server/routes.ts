@@ -195,7 +195,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const lowerMessage = message.toLowerCase();
       
       // Check for "movies near me" query
-      if (lowerMessage.includes("near me") || 
+      if (lowerMessage === "movies near me" || 
+          lowerMessage.includes("near me") || 
           (lowerMessage.includes("movie") && lowerMessage.includes("near")) ||
           (lowerMessage.includes("theater") && lowerMessage.includes("near"))) {
         
@@ -209,7 +210,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Check for "new releases" query
-      if (lowerMessage.includes("new releases") || 
+      if (lowerMessage === "show me new releases" ||
+          lowerMessage.includes("new releases") || 
           lowerMessage.includes("latest movies") ||
           lowerMessage.includes("just released")) {
         
@@ -225,7 +227,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Check for "popular movies" query
-      if (lowerMessage.includes("popular movies") || 
+      if (lowerMessage === "show me popular movies" ||
+          lowerMessage.includes("popular movies") || 
           lowerMessage.includes("top movies") ||
           lowerMessage.includes("best movies")) {
         
@@ -242,6 +245,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (lowerMessage.includes("watch") || lowerMessage.includes("movie") || lowerMessage.includes("show")) {
         // Extract potential movie titles or genres
         let searchTerm = "";
+        
+        // Skip specific queries that we've already handled
+        if (lowerMessage === "movies near me" || 
+            lowerMessage === "show me new releases" || 
+            lowerMessage === "show me popular movies") {
+          // Already handled above, skip to default response
+          const movies = await storage.getMovies();
+          
+          return res.json({
+            type: "movie_suggestions",
+            message: "Here are some popular movies playing right now:",
+            data: movies.slice(0, 3)
+          });
+        }
         
         if (lowerMessage.includes("watch")) {
           const watchIndex = lowerMessage.indexOf("watch");
