@@ -162,7 +162,7 @@ export default function Confirmation() {
               
               <div>
                 <p className="text-xs text-gray-500 mb-1">AMOUNT PAID</p>
-                <p className="font-medium">{formatPrice(booking.totalPrice)}</p>
+                <p className="font-medium">{formatPrice(booking.totalPrice / 100)}</p>
               </div>
             </div>
           </div>

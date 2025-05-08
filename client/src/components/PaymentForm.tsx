@@ -1,19 +1,38 @@
 import { useState } from 'react';
 import { useToast } from '@/hooks/use-toast';
 import { BadgeCheck, CreditCard, Calendar, Lock } from 'lucide-react';
+import { useMutation } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
 
 interface PaymentFormProps {
   amount: number;
+  bookingId: number;
   onPaymentComplete: () => void;
 }
 
-export default function PaymentForm({ amount, onPaymentComplete }: PaymentFormProps) {
+export default function PaymentForm({ amount, bookingId, onPaymentComplete }: PaymentFormProps) {
   const [cardNumber, setCardNumber] = useState('');
   const [cardName, setCardName] = useState('');
   const [expiry, setExpiry] = useState('');
   const [cvc, setCvc] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
   const { toast } = useToast();
+
+  // Create payment intent mutation
+  const createPaymentIntentMutation = useMutation({
+    mutationFn: async (amount: number) => {
+      const response = await apiRequest('POST', '/api/create-payment-intent', { amount });
+      return response.json();
+    }
+  });
+
+  // Confirm payment mutation
+  const confirmPaymentMutation = useMutation({
+    mutationFn: async (data: { paymentIntentId: string, bookingId: number }) => {
+      const response = await apiRequest('POST', '/api/confirm-payment', data);
+      return response.json();
+    }
+  });
 
   // Format card number with spaces
   const formatCardNumber = (value: string) => {
@@ -78,18 +97,32 @@ export default function PaymentForm({ amount, onPaymentComplete }: PaymentFormPr
     try {
       setIsProcessing(true);
       
-      // Simulate payment processing
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // First, create a payment intent
+      const paymentIntentResponse = await createPaymentIntentMutation.mutateAsync(amount * 100); // Convert to cents
+      const { clientSecret } = paymentIntentResponse;
       
-      // Simulate successful payment
-      toast({
-        title: "Payment Successful",
-        description: `Your payment of $${amount.toFixed(2)} has been processed successfully.`,
-        variant: "default"
+      // Extract payment intent ID from client secret
+      // In a real implementation, Stripe.js would handle this
+      const paymentIntentId = clientSecret.split('_secret_')[0];
+      
+      // Then confirm the payment
+      const confirmResponse = await confirmPaymentMutation.mutateAsync({
+        paymentIntentId,
+        bookingId
       });
       
-      setIsProcessing(false);
-      onPaymentComplete();
+      if (confirmResponse.success) {
+        toast({
+          title: "Payment Successful",
+          description: `Your payment of $${amount.toFixed(2)} has been processed successfully.`,
+          variant: "default"
+        });
+        
+        setIsProcessing(false);
+        onPaymentComplete();
+      } else {
+        throw new Error("Payment confirmation failed");
+      }
     } catch (error) {
       setIsProcessing(false);
       toast({

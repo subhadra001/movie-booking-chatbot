@@ -197,7 +197,12 @@ export class MemStorage implements IStorage {
   
   async createSeat(insertSeat: InsertSeat): Promise<Seat> {
     const id = this.seatCurrentId++;
-    const seat: Seat = { ...insertSeat, id };
+    // Make sure isAvailable is always a boolean (default to true if not provided)
+    const seat: Seat = { 
+      ...insertSeat, 
+      id,
+      isAvailable: insertSeat.isAvailable !== undefined ? insertSeat.isAvailable : true 
+    };
     this.seats.set(id, seat);
     return seat;
   }
@@ -229,10 +234,13 @@ export class MemStorage implements IStorage {
   
   async createBooking(insertBooking: InsertBooking): Promise<Booking> {
     const id = this.bookingCurrentId++;
+    // Create booking with proper type casting to ensure userId is handled correctly
     const booking: Booking = { 
-      ...insertBooking, 
+      showtimeId: insertBooking.showtimeId,
+      seatIds: insertBooking.seatIds,
+      totalPrice: insertBooking.totalPrice,
+      userId: insertBooking.userId || null, // Handle the case where userId might be undefined
       id,
-      // Default to 'pending' if no status is provided
       status: 'pending',
       createdAt: new Date() 
     };

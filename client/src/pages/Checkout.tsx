@@ -220,7 +220,8 @@ export default function Checkout() {
             </div>
           ) : (
             <PaymentForm 
-              amount={booking.totalPrice} 
+              amount={booking.totalPrice / 100} // Convert cents to dollars
+              bookingId={bookingId!}
               onPaymentComplete={handlePaymentComplete} 
             />
           )}
