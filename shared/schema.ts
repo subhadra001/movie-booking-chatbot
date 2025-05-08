@@ -68,6 +68,7 @@ export const bookings = pgTable("bookings", {
   showtimeId: integer("showtime_id").notNull(),
   seatIds: text("seat_ids").array().notNull(),
   totalPrice: integer("total_price").notNull(),
+  status: text("status").notNull().default("pending"),
   createdAt: timestamp("created_at").notNull().defaultNow(),
 });
 

@@ -55,6 +55,7 @@ export interface IStorage {
   getBookingsByUser(userId: number): Promise<Booking[]>;
   getBooking(id: number): Promise<Booking | undefined>;
   createBooking(booking: InsertBooking): Promise<Booking>;
+  updateBookingStatus(id: number, status: string): Promise<Booking>;
 }
 
 export class MemStorage implements IStorage {
@@ -231,6 +232,7 @@ export class MemStorage implements IStorage {
     const booking: Booking = { 
       ...insertBooking, 
       id,
+      status: insertBooking.status || 'pending',
       createdAt: new Date() 
     };
     this.bookings.set(id, booking);
@@ -242,6 +244,19 @@ export class MemStorage implements IStorage {
     }
     
     return booking;
+  }
+  
+  async updateBookingStatus(id: number, status: string): Promise<Booking> {
+    const booking = this.bookings.get(id);
+    
+    if (!booking) {
+      throw new Error(`Booking with id ${id} not found`);
+    }
+    
+    const updatedBooking = { ...booking, status };
+    this.bookings.set(id, updatedBooking);
+    
+    return updatedBooking;
   }
   
   // Initialize sample data

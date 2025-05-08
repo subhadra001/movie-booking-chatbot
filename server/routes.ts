@@ -165,6 +165,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ message: error.message });
     }
   });
+  
+  // Update booking status (e.g. after payment)
+  app.patch(`${apiPrefix}/bookings/:id/complete`, async (req: Request, res: Response) => {
+    try {
+      const id = parseInt(req.params.id);
+      const booking = await storage.getBooking(id);
+      
+      if (!booking) {
+        return res.status(404).json({ message: "Booking not found" });
+      }
+      
+      // Update booking status to completed
+      const updatedBooking = await storage.updateBookingStatus(id, "completed");
+      
+      res.json(updatedBooking);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
 
   // Search movies by title or genre
   app.get(`${apiPrefix}/search/movies`, async (req: Request, res: Response) => {
