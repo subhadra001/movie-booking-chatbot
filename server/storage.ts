@@ -24,32 +24,32 @@ export interface IStorage {
   getUser(id: number): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
-  
+
   // Movie Methods
   getMovies(): Promise<Movie[]>;
   getMovie(id: number): Promise<Movie | undefined>;
   getMovieByTitle(title: string): Promise<Movie | undefined>;
   searchMovies(query: string): Promise<Movie[]>;
   createMovie(movie: InsertMovie): Promise<Movie>;
-  
+
   // Theater Methods
   getTheaters(): Promise<Theater[]>;
   getTheater(id: number): Promise<Theater | undefined>;
   createTheater(theater: InsertTheater): Promise<Theater>;
-  
+
   // Showtime Methods
   getShowtimes(): Promise<Showtime[]>;
   getShowtimesByMovie(movieId: number): Promise<Showtime[]>;
   getShowtimesByTheater(theaterId: number): Promise<Showtime[]>;
   getShowtime(id: number): Promise<Showtime | undefined>;
   createShowtime(showtime: InsertShowtime): Promise<Showtime>;
-  
+
   // Seat Methods
   getSeats(showtimeId: number): Promise<Seat[]>;
   getSeat(id: number): Promise<Seat | undefined>;
   createSeat(seat: InsertSeat): Promise<Seat>;
   updateSeatAvailability(id: number, isAvailable: boolean): Promise<Seat>;
-  
+
   // Booking Methods
   getBookings(): Promise<Booking[]>;
   getBookingsByUser(userId: number): Promise<Booking[]>;
@@ -65,7 +65,7 @@ export class MemStorage implements IStorage {
   private showtimes: Map<number, Showtime>;
   private seats: Map<number, Seat>;
   private bookings: Map<number, Booking>;
-  
+
   private userCurrentId: number;
   private movieCurrentId: number;
   private theaterCurrentId: number;
@@ -80,14 +80,14 @@ export class MemStorage implements IStorage {
     this.showtimes = new Map();
     this.seats = new Map();
     this.bookings = new Map();
-    
+
     this.userCurrentId = 1;
     this.movieCurrentId = 1;
     this.theaterCurrentId = 1;
     this.showtimeCurrentId = 1;
     this.seatCurrentId = 1;
     this.bookingCurrentId = 1;
-    
+
     // Initialize with sample data
     this.initializeData();
   }
@@ -109,22 +109,22 @@ export class MemStorage implements IStorage {
     this.users.set(id, user);
     return user;
   }
-  
+
   // Movie Methods
   async getMovies(): Promise<Movie[]> {
     return Array.from(this.movies.values());
   }
-  
+
   async getMovie(id: number): Promise<Movie | undefined> {
     return this.movies.get(id);
   }
-  
+
   async getMovieByTitle(title: string): Promise<Movie | undefined> {
     return Array.from(this.movies.values()).find(
       (movie) => movie.title.toLowerCase() === title.toLowerCase(),
     );
   }
-  
+
   async searchMovies(query: string): Promise<Movie[]> {
     const lowercaseQuery = query.toLowerCase();
     return Array.from(this.movies.values()).filter(
@@ -132,69 +132,69 @@ export class MemStorage implements IStorage {
                  movie.genres.toLowerCase().includes(lowercaseQuery)
     );
   }
-  
+
   async createMovie(insertMovie: InsertMovie): Promise<Movie> {
     const id = this.movieCurrentId++;
     const movie: Movie = { ...insertMovie, id };
     this.movies.set(id, movie);
     return movie;
   }
-  
+
   // Theater Methods
   async getTheaters(): Promise<Theater[]> {
     return Array.from(this.theaters.values());
   }
-  
+
   async getTheater(id: number): Promise<Theater | undefined> {
     return this.theaters.get(id);
   }
-  
+
   async createTheater(insertTheater: InsertTheater): Promise<Theater> {
     const id = this.theaterCurrentId++;
     const theater: Theater = { ...insertTheater, id };
     this.theaters.set(id, theater);
     return theater;
   }
-  
+
   // Showtime Methods
   async getShowtimes(): Promise<Showtime[]> {
     return Array.from(this.showtimes.values());
   }
-  
+
   async getShowtimesByMovie(movieId: number): Promise<Showtime[]> {
     return Array.from(this.showtimes.values()).filter(
       (showtime) => showtime.movieId === movieId
     );
   }
-  
+
   async getShowtimesByTheater(theaterId: number): Promise<Showtime[]> {
     return Array.from(this.showtimes.values()).filter(
       (showtime) => showtime.theaterId === theaterId
     );
   }
-  
+
   async getShowtime(id: number): Promise<Showtime | undefined> {
     return this.showtimes.get(id);
   }
-  
+
   async createShowtime(insertShowtime: InsertShowtime): Promise<Showtime> {
     const id = this.showtimeCurrentId++;
     const showtime: Showtime = { ...insertShowtime, id };
     this.showtimes.set(id, showtime);
     return showtime;
   }
-  
+
   // Seat Methods
   async getSeats(showtimeId: number): Promise<Seat[]> {
     return Array.from(this.seats.values()).filter(
       (seat) => seat.showtimeId === showtimeId
     );
   }
-  
+
   async getSeat(id: number): Promise<Seat | undefined> {
     return this.seats.get(id);
   }
-  
+
   async createSeat(insertSeat: InsertSeat): Promise<Seat> {
     const id = this.seatCurrentId++;
     // Make sure isAvailable is always a boolean (default to true if not provided)
@@ -206,7 +206,7 @@ export class MemStorage implements IStorage {
     this.seats.set(id, seat);
     return seat;
   }
-  
+
   async updateSeatAvailability(id: number, isAvailable: boolean): Promise<Seat> {
     const seat = this.seats.get(id);
     if (!seat) {
@@ -216,22 +216,22 @@ export class MemStorage implements IStorage {
     this.seats.set(id, updatedSeat);
     return updatedSeat;
   }
-  
+
   // Booking Methods
   async getBookings(): Promise<Booking[]> {
     return Array.from(this.bookings.values());
   }
-  
+
   async getBookingsByUser(userId: number): Promise<Booking[]> {
     return Array.from(this.bookings.values()).filter(
       (booking) => booking.userId === userId
     );
   }
-  
+
   async getBooking(id: number): Promise<Booking | undefined> {
     return this.bookings.get(id);
   }
-  
+
   async createBooking(insertBooking: InsertBooking): Promise<Booking> {
     const id = this.bookingCurrentId++;
     // Create booking with proper type casting to ensure userId is handled correctly
@@ -245,29 +245,29 @@ export class MemStorage implements IStorage {
       createdAt: new Date() 
     };
     this.bookings.set(id, booking);
-    
+
     // Mark seats as unavailable
     const seatIds = insertBooking.seatIds;
     for (const seatId of seatIds) {
       await this.updateSeatAvailability(parseInt(seatId), false);
     }
-    
+
     return booking;
   }
-  
+
   async updateBookingStatus(id: number, status: string): Promise<Booking> {
     const booking = this.bookings.get(id);
-    
+
     if (!booking) {
       throw new Error(`Booking with id ${id} not found`);
     }
-    
+
     const updatedBooking = { ...booking, status };
     this.bookings.set(id, updatedBooking);
-    
+
     return updatedBooking;
   }
-  
+
   // Initialize sample data
   private initializeData() {
     // Movies
@@ -333,11 +333,11 @@ export class MemStorage implements IStorage {
         formats: ["IMAX", "4DX"]
       }
     ];
-    
+
     movies.forEach(movie => {
       this.createMovie(movie);
     });
-    
+
     // Theaters
     const theaters: InsertTheater[] = [
       {
@@ -359,11 +359,11 @@ export class MemStorage implements IStorage {
         image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=300"
       }
     ];
-    
+
     theaters.forEach(theater => {
       this.createTheater(theater);
     });
-    
+
     // Showtimes
     const showtimes: InsertShowtime[] = [
       { movieId: 1, theaterId: 1, time: "10:30 AM", date: "2023-06-15" },
@@ -387,28 +387,28 @@ export class MemStorage implements IStorage {
       { movieId: 6, theaterId: 3, time: "4:00 PM", date: "2023-06-15" },
       { movieId: 6, theaterId: 3, time: "9:15 PM", date: "2023-06-15" }
     ];
-    
+
     showtimes.forEach(showtime => {
       this.createShowtime(showtime);
     });
-    
+
     // Create seats for each showtime
     for (let showtimeId = 1; showtimeId <= showtimes.length; showtimeId++) {
       // Create 4 rows (A-D) with 7 seats each (1-7)
       const rows = ['A', 'B', 'C', 'D'];
-      
+
       rows.forEach(row => {
         for (let number = 1; number <= 7; number++) {
           // Randomly mark some seats as unavailable for realism
           const isAvailable = Math.random() > 0.2;
-          
+
           const seat: InsertSeat = {
             showtimeId,
             row,
             number,
             isAvailable
           };
-          
+
           this.createSeat(seat);
         }
       });

@@ -90,14 +90,14 @@ export default function Confirmation() {
       >
         <ArrowLeft size={16} className="mr-1" /> Return to Chat
       </button>
-      
+
       <div className="bg-white rounded-lg shadow-lg overflow-hidden">
         {/* Header */}
         <div className="bg-primary p-6 text-white">
           <h1 className="text-2xl font-bold">Booking Confirmed!</h1>
           <p className="opacity-90">Your tickets are ready. We've sent a copy to your email.</p>
         </div>
-        
+
         {/* Main Content */}
         <div className="p-6">
           {/* Movie Info */}
@@ -110,7 +110,7 @@ export default function Confirmation() {
             <div className="flex-1">
               <h2 className="text-xl font-bold">{movie.title}</h2>
               <p className="text-gray-500 text-sm mb-2">{movie.rating} • {movie.duration} • {movie.genres}</p>
-              
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
                 <div className="flex items-start">
                   <Calendar className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
@@ -119,7 +119,7 @@ export default function Confirmation() {
                     <p className="font-medium">{formatDate()}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start">
                   <Clock className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
                   <div>
@@ -127,7 +127,7 @@ export default function Confirmation() {
                     <p className="font-medium">{showtime.time}</p>
                   </div>
                 </div>
-                
+
                 <div className="flex items-start md:col-span-2">
                   <MapPin className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
                   <div>
@@ -139,14 +139,14 @@ export default function Confirmation() {
               </div>
             </div>
           </div>
-          
+
           {/* Ticket Info */}
           <div className="my-8">
             <div className="flex justify-between items-center mb-4">
               <h3 className="font-bold text-lg">Ticket Details</h3>
               <span className="text-primary font-medium text-sm">Booking Ref: {bookingReference}</span>
             </div>
-            
+
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
                 <p className="text-xs text-gray-500 mb-1">SEATS</p>
@@ -154,19 +154,19 @@ export default function Confirmation() {
                   {selectedSeats.map(seat => `${seat.row}${seat.number}`).join(', ')}
                 </p>
               </div>
-              
+
               <div>
                 <p className="text-xs text-gray-500 mb-1">TICKETS</p>
                 <p className="font-medium">{selectedSeats.length} × Adult</p>
               </div>
-              
+
               <div>
                 <p className="text-xs text-gray-500 mb-1">AMOUNT PAID</p>
                 <p className="font-medium">{formatPrice(booking.totalPrice / 100)}</p>
               </div>
             </div>
           </div>
-          
+
           {/* QR Code */}
           <div 
             className="bg-gray-50 rounded-lg p-6 text-center cursor-pointer transition-all"
@@ -188,7 +188,7 @@ export default function Confirmation() {
             )}
           </div>
         </div>
-        
+
         {/* Actions */}
         <div className="bg-gray-50 p-6 flex flex-col md:flex-row gap-4 justify-between">
           <div className="flex flex-col md:flex-row gap-4">
@@ -201,7 +201,7 @@ export default function Confirmation() {
               Share
             </button>
           </div>
-          
+
           <button 
             onClick={() => setLocation('/')}
             className="flex items-center justify-center px-4 py-2 bg-primary text-white rounded-md text-sm font-medium"
@@ -210,7 +210,7 @@ export default function Confirmation() {
           </button>
         </div>
       </div>
-      
+
       <div className="mt-8 text-center text-sm text-gray-500">
         <p>Need assistance? Contact our support team at help@moviebooking.com</p>
         <p className="mt-2">© {new Date().getFullYear()} MovieTickets. All rights reserved.</p>

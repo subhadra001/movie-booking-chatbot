@@ -40,11 +40,11 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
     const matches = v.match(/\d{4,16}/g);
     const match = matches && matches[0] || '';
     const parts = [];
-    
+
     for (let i = 0, len = match.length; i < len; i += 4) {
       parts.push(match.substring(i, i + 4));
     }
-    
+
     if (parts.length) {
       return parts.join(' ');
     } else {
@@ -55,17 +55,17 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
   // Format expiry date (MM/YY)
   const formatExpiry = (value: string) => {
     const v = value.replace(/\s+/g, '').replace(/[^0-9]/gi, '');
-    
+
     if (v.length > 2) {
       return `${v.substring(0, 2)}/${v.substring(2, 4)}`;
     }
-    
+
     return v;
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Basic validation
     if (cardNumber.length < 16) {
       toast({
@@ -75,7 +75,7 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
       });
       return;
     }
-    
+
     if (expiry.length < 5) {
       toast({
         title: "Invalid Expiry Date",
@@ -84,7 +84,7 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
       });
       return;
     }
-    
+
     if (cvc.length < 3) {
       toast({
         title: "Invalid CVC",
@@ -93,31 +93,31 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
       });
       return;
     }
-    
+
     try {
       setIsProcessing(true);
-      
+
       // First, create a payment intent
       const paymentIntentResponse = await createPaymentIntentMutation.mutateAsync(amount * 100); // Convert to cents
       const { clientSecret } = paymentIntentResponse;
-      
+
       // Extract payment intent ID from client secret
       // In a real implementation, Stripe.js would handle this
       const paymentIntentId = clientSecret.split('_secret_')[0];
-      
+
       // Then confirm the payment
       const confirmResponse = await confirmPaymentMutation.mutateAsync({
         paymentIntentId,
         bookingId
       });
-      
+
       if (confirmResponse.success) {
         toast({
           title: "Payment Successful",
           description: `Your payment of $${amount.toFixed(2)} has been processed successfully.`,
           variant: "default"
         });
-        
+
         setIsProcessing(false);
         onPaymentComplete();
       } else {
@@ -139,7 +139,7 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
         <h2 className="text-xl font-semibold text-gray-800">Payment Details</h2>
         <div className="text-primary font-semibold">${amount.toFixed(2)}</div>
       </div>
-      
+
       <form onSubmit={handleSubmit}>
         <div className="space-y-4">
           <div className="space-y-2">
@@ -159,7 +159,7 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
               <CreditCard className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
             </div>
           </div>
-          
+
           <div className="space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Cardholder Name
@@ -173,7 +173,7 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
               disabled={isProcessing}
             />
           </div>
-          
+
           <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
@@ -192,7 +192,7 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
                 <Calendar className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
               </div>
             </div>
-            
+
             <div className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
                 CVC / CVV
@@ -211,7 +211,7 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
               </div>
             </div>
           </div>
-          
+
           <div className="pt-4">
             <button
               type="submit"
@@ -232,7 +232,7 @@ export default function PaymentForm({ amount, bookingId, onPaymentComplete }: Pa
           </div>
         </div>
       </form>
-      
+
       <div className="mt-6 flex items-center justify-center text-sm text-gray-500">
         <Lock className="h-4 w-4 mr-1" /> 
         Your payment information is secure

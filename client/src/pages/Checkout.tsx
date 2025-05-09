@@ -54,13 +54,13 @@ export default function Checkout() {
     try {
       await apiRequest('PATCH', `/api/bookings/${bookingId}/complete`, {});
       setPaymentComplete(true);
-      
+
       // Show success toast
       toast({
         title: "Payment Complete!",
         description: "Your tickets have been confirmed and sent to your email.",
       });
-      
+
       // Redirect to confirmation after 3 seconds
       setTimeout(() => {
         setLocation(`/confirmation/${bookingId}`);
@@ -102,7 +102,7 @@ export default function Checkout() {
   // Format date
   const formatDate = () => {
     if (!showtime) return 'Today';
-    
+
     const date = new Date(showtime.date);
     return `${date.toLocaleString('default', { weekday: 'long' })}, ${date.toLocaleString('default', { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`;
   };
@@ -115,12 +115,12 @@ export default function Checkout() {
       >
         <ArrowLeft size={16} className="mr-1" /> Return to Chat
       </button>
-      
+
       <div className="grid md:grid-cols-2 gap-8">
         {/* Order Summary */}
         <div>
           <h2 className="text-2xl font-bold mb-6">Order Summary</h2>
-          
+
           <div className="bg-white rounded-lg shadow-md p-6 mb-4">
             {movie && (
               <div className="flex gap-4 mb-6">
@@ -136,7 +136,7 @@ export default function Checkout() {
                 </div>
               </div>
             )}
-            
+
             <div className="space-y-4">
               <div className="flex items-start">
                 <Calendar className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
@@ -145,7 +145,7 @@ export default function Checkout() {
                   <p className="font-medium">{formatDate()}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Clock className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
                 <div>
@@ -153,7 +153,7 @@ export default function Checkout() {
                   <p className="font-medium">{showtime?.time || '—'}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <MapPin className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
                 <div>
@@ -162,7 +162,7 @@ export default function Checkout() {
                   <p className="text-sm text-gray-500">{theater?.address || '—'}</p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Ticket className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
                 <div>
@@ -172,7 +172,7 @@ export default function Checkout() {
                   </p>
                 </div>
               </div>
-              
+
               <div className="flex items-start">
                 <Users className="w-5 h-5 text-gray-400 mr-3 mt-0.5" />
                 <div>
@@ -181,7 +181,7 @@ export default function Checkout() {
                 </div>
               </div>
             </div>
-            
+
             <div className="mt-6 pt-4 border-t border-gray-100">
               <div className="flex justify-between text-sm mb-1">
                 <span className="text-gray-500">Tickets ({selectedSeats.length} × $12.50)</span>
@@ -198,13 +198,13 @@ export default function Checkout() {
             </div>
           </div>
         </div>
-        
+
         {/* Payment Section */}
         <div>
           <h2 className="text-2xl font-bold mb-6">
             {paymentComplete ? 'Payment Complete' : 'Payment Details'}
           </h2>
-          
+
           {paymentComplete ? (
             <div className="bg-white rounded-lg shadow-md p-6 flex flex-col items-center justify-center min-h-[400px]">
               <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4">
