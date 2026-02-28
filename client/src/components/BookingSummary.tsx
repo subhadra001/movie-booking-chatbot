@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { Movie, Showtime, Theater, Seat } from "@/types";
 import { CheckCircle, QrCode, Share2 } from "lucide-react";
@@ -14,8 +15,8 @@ export default function BookingSummary({
   movie, 
   showtime, 
   theater,
-  seats,
-  ticketQuantity
+  seats = [],
+  ticketQuantity = 0
 }: BookingSummaryProps) {
   // Calculate total price - $12.50 per ticket + $2.50 booking fee
   const ticketPrice = 12.50;
@@ -24,8 +25,7 @@ export default function BookingSummary({
 
   // Format date to display nicely
   const formatDate = () => {
-    if (!showtime) {
-      // Use today's date if showtime is not available
+    if (!showtime?.date) {
       const today = new Date();
       return `Today, ${today.toLocaleString('default', { month: 'long' })} ${today.getDate()}, ${today.getFullYear()}`;
     }
@@ -69,16 +69,16 @@ export default function BookingSummary({
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Time:</span>
-            <span className="font-medium">{showtime?.time || '4:45 PM'}</span>
+            <span className="font-medium">{showtime?.time || '—'}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Theater:</span>
-            <span className="font-medium">{theater?.name || 'Cineplex IMAX - Downtown'}</span>
+            <span className="font-medium">{theater?.name || '—'}</span>
           </div>
           <div className="flex justify-between">
             <span className="text-gray-600">Seats:</span>
             <span className="font-medium">
-              {seats.map(seat => `${seat.row}${seat.number}`).join(', ')}
+              {seats.map(seat => `${seat.row}${seat.number}`).join(', ') || '—'}
             </span>
           </div>
           <div className="flex justify-between">
