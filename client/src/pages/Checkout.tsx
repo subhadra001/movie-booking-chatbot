@@ -17,20 +17,32 @@ export default function Checkout() {
 
   const { data: booking, isLoading } = useQuery({
     queryKey: ['/api/bookings', bookingId],
-    queryFn: getQueryFn({ on401: 'returnNull' }),
+    queryFn: async () => {
+      const res = await fetch(`/api/bookings/${bookingId}`);
+      if (!res.ok) throw new Error('Booking not found');
+      return res.json();
+    },
     enabled: !!bookingId
-  });
-
-  const { data: movie } = useQuery({
-    queryKey: ['/api/movies', booking?.movieId],
-    queryFn: getQueryFn({ on401: 'returnNull' }),
-    enabled: !!booking?.movieId
   });
 
   const { data: showtime } = useQuery({
     queryKey: ['/api/showtimes', booking?.showtimeId],
-    queryFn: getQueryFn({ on401: 'returnNull' }),
+    queryFn: async () => {
+      const res = await fetch(`/api/showtimes/${booking?.showtimeId}`);
+      if (!res.ok) throw new Error('Showtime not found');
+      return res.json();
+    },
     enabled: !!booking?.showtimeId
+  });
+
+  const { data: movie } = useQuery({
+    queryKey: ['/api/movies', showtime?.movieId],
+    queryFn: async () => {
+      const res = await fetch(`/api/movies/${showtime?.movieId}`);
+      if (!res.ok) throw new Error('Movie not found');
+      return res.json();
+    },
+    enabled: !!showtime?.movieId
   });
 
   const { data: theater } = useQuery({
