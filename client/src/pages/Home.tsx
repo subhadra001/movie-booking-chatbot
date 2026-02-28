@@ -9,12 +9,12 @@ export default function Home() {
     meta.name = 'theme-color';
     meta.content = '#6C63FF'; // Primary color
     document.head.appendChild(meta);
-    
+
     return () => {
       document.head.removeChild(meta);
     };
   }, []);
-  
+
   return (
     <>
       <Helmet>

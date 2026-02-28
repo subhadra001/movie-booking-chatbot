@@ -21,7 +21,7 @@ export default function BookingSummary({
   const ticketPrice = 12.50;
   const bookingFee = 2.50;
   const totalPrice = (ticketPrice * ticketQuantity) + bookingFee;
-  
+
   // Format date to display nicely
   const formatDate = () => {
     if (!showtime) {
@@ -29,19 +29,19 @@ export default function BookingSummary({
       const today = new Date();
       return `Today, ${today.toLocaleString('default', { month: 'long' })} ${today.getDate()}, ${today.getFullYear()}`;
     }
-    
+
     const date = new Date(showtime.date);
     const now = new Date();
-    
+
     // Check if the date is today
     if (date.toDateString() === now.toDateString()) {
       return `Today, ${date.toLocaleString('default', { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`;
     }
-    
+
     // Format date normally
     return `${date.toLocaleString('default', { weekday: 'long' })}, ${date.toLocaleString('default', { month: 'long' })} ${date.getDate()}, ${date.getFullYear()}`;
   };
-  
+
   return (
     <motion.div 
       className="pl-10 mb-4"
@@ -57,7 +57,7 @@ export default function BookingSummary({
             CONFIRMED
           </span>
         </div>
-        
+
         <div className="space-y-2 text-sm">
           <div className="flex justify-between">
             <span className="text-gray-600">Movie:</span>
@@ -85,7 +85,7 @@ export default function BookingSummary({
             <span className="text-gray-600">Tickets:</span>
             <span className="font-medium">{ticketQuantity} × Adult</span>
           </div>
-          
+
           <div className="border-t border-gray-200 pt-2 mt-2">
             <div className="flex justify-between text-xs text-gray-500">
               <span>Tickets ({ticketQuantity} × ${ticketPrice.toFixed(2)})</span>
@@ -101,7 +101,7 @@ export default function BookingSummary({
             </div>
           </div>
         </div>
-        
+
         <div className="mt-4 flex justify-between">
           <button className="bg-white border border-primary text-primary px-3 py-1.5 rounded-md text-sm flex items-center">
             <QrCode className="w-4 h-4 mr-1" /> View Tickets

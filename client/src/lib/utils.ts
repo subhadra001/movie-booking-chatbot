@@ -31,23 +31,23 @@ export const matchIntent = (text: string, intents: string[]) => {
 
 export const extractMovieTitle = (text: string): string => {
   const lowerText = text.toLowerCase();
-  
+
   // Try to extract title after common phrases
   const watchRegex = /(?:want to |like to |to )?(watch|see) (?:the |a |an )?(.+?)(?:\s|$|\.|\?)/i;
   const watchMatch = text.match(watchRegex);
-  
+
   if (watchMatch && watchMatch[2]) {
     return watchMatch[2].trim();
   }
-  
+
   // Try to extract after "movie"
   const movieRegex = /(?:the |a |an )?(movie|film) (?:called |titled |named )?(.+?)(?:\s|$|\.|\?)/i;
   const movieMatch = text.match(movieRegex);
-  
+
   if (movieMatch && movieMatch[2]) {
     return movieMatch[2].trim();
   }
-  
+
   return '';
 };
 

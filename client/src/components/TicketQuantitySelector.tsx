@@ -6,7 +6,7 @@ interface TicketQuantitySelectorProps {
 
 export default function TicketQuantitySelector({ onSelect }: TicketQuantitySelectorProps) {
   const quantities = [1, 2, 3, 4, 5];
-  
+
   return (
     <motion.div 
       className="pl-10 mb-4"

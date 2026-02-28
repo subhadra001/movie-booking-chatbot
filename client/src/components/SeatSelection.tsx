@@ -21,18 +21,18 @@ export default function SeatSelection({
 }: SeatSelectionProps) {
   const [seatGrid, setSeatGrid] = useState<Record<string, Seat[]>>({});
   const [rows, setRows] = useState<string[]>([]);
-  
+
   const { data: seats, isLoading } = useQuery({
     queryKey: [`/api/seats?showtimeId=${showtimeId}`],
     enabled: !!showtimeId
   });
-  
+
   // Organize seats into a grid by row
   useEffect(() => {
     if (seats && Array.isArray(seats)) {
       const grid: Record<string, Seat[]> = {};
       const rowList: string[] = [];
-      
+
       seats.forEach((seat: Seat) => {
         if (!grid[seat.row]) {
           grid[seat.row] = [];
@@ -40,15 +40,15 @@ export default function SeatSelection({
         }
         grid[seat.row].push(seat);
       });
-      
+
       // Sort rows alphabetically
       rowList.sort();
-      
+
       // Sort seats by number within each row
       Object.keys(grid).forEach(row => {
         grid[row].sort((a, b) => a.number - b.number);
       });
-      
+
       setSeatGrid(grid);
       setRows(rowList);
     }
@@ -57,7 +57,7 @@ export default function SeatSelection({
   const isSeatSelected = (seat: Seat) => {
     return selectedSeats.some(s => s.id === seat.id);
   };
-  
+
   if (isLoading) {
     return (
       <div className="pl-10 mb-4 flex justify-center">
@@ -65,7 +65,7 @@ export default function SeatSelection({
       </div>
     );
   }
-  
+
   return (
     <motion.div 
       className="pl-10 mb-4"
@@ -78,19 +78,19 @@ export default function SeatSelection({
         <div className="w-full h-8 bg-gray-300 rounded-t-3xl mb-6 flex items-center justify-center">
           <span className="text-xs text-gray-600 font-medium">SCREEN</span>
         </div>
-        
+
         {/* Seat grid */}
         <div className="grid grid-cols-8 gap-2 mb-6">
           {/* Empty top-left corner */}
           <div></div>
-          
+
           {/* Column numbers */}
           {Array.from({ length: 7 }, (_, i) => i + 1).map(num => (
             <div key={`col-${num}`} className="text-xs text-gray-500 flex items-center justify-center">
               {num}
             </div>
           ))}
-          
+
           {/* Rows with seats */}
           {rows.map(row => (
             <div key={`row-${row}`} className="contents">
@@ -98,7 +98,7 @@ export default function SeatSelection({
               <div className="text-xs text-gray-500 flex items-center justify-center">
                 {row}
               </div>
-              
+
               {/* Seats in this row */}
               {seatGrid[row]?.map(seat => (
                 <div 
@@ -117,7 +117,7 @@ export default function SeatSelection({
             </div>
           ))}
         </div>
-        
+
         {/* Legend */}
         <div className="flex items-center justify-center space-x-4 text-xs text-gray-600 mb-4">
           <div className="flex items-center">
@@ -133,7 +133,7 @@ export default function SeatSelection({
             <span>Unavailable</span>
           </div>
         </div>
-        
+
         {/* Confirm button */}
         <div className="text-center">
           <button 

@@ -24,12 +24,12 @@
     --destructive-foreground: 210 40% 98%;
     --ring: 252 99% 69%;
     --radius: 0.5rem;
-    
+
     /* Custom chat colors */
     --bubble-user: 220 16% 92%;
     --bubble-agent: 252 99% 69%;
     --input-bg: 210 40% 96.1%;
-    
+
     /* Chart colors */
     --chart-1: 252 99% 69%;
     --chart-2: 174 67% 45%;
@@ -58,7 +58,7 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
     --ring: 252 99% 69%;
-    
+
     /* Custom chat colors */
     --bubble-user: 217 33% 17%;
     --bubble-agent: 252 99% 69%;
@@ -75,7 +75,7 @@
     @apply bg-background text-foreground;
     font-family: 'Inter', sans-serif;
   }
-  
+
   h1, h2, h3, h4, h5, h6 {
     font-family: 'IBM Plex Sans', sans-serif;
   }
@@ -87,20 +87,20 @@
     scrollbar-width: thin;
     scrollbar-color: theme('colors.gray.300') theme('colors.gray.100');
   }
-  
+
   .chat-container::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   .chat-container::-webkit-scrollbar-thumb {
     background-color: theme('colors.gray.300');
     border-radius: 3px;
   }
-  
+
   .chat-container::-webkit-scrollbar-track {
     background-color: theme('colors.gray.100');
   }
-  
+
   /* Custom bubble shapes */
   .user-bubble::after {
     content: '';
@@ -112,7 +112,7 @@
     background-color: hsl(var(--bubble-user));
     clip-path: polygon(0 0, 0% 100%, 100% 100%);
   }
-  
+
   .agent-bubble::before {
     content: '';
     position: absolute;
@@ -123,44 +123,44 @@
     background-color: hsl(var(--bubble-agent));
     clip-path: polygon(100% 0, 0% 100%, 100% 100%);
   }
-  
+
   /* Movie poster aspect ratio */
   .movie-poster {
     aspect-ratio: 2/3;
   }
-  
+
   /* Typing animation */
   .typing-indicator span {
     animation: typing 1s infinite;
   }
-  
+
   .typing-indicator span:nth-child(2) {
     animation-delay: 0.2s;
   }
-  
+
   .typing-indicator span:nth-child(3) {
     animation-delay: 0.4s;
   }
-  
+
   @keyframes typing {
     0%, 100% { opacity: 0.4; }
     50% { opacity: 1; }
   }
-  
+
   @keyframes slideUp {
     0% { transform: translateY(20px); opacity: 0; }
     100% { transform: translateY(0); opacity: 1; }
   }
-  
+
   @keyframes fadeIn {
     0% { opacity: 0; }
     100% { opacity: 1; }
   }
-  
+
   .animate-slide-up {
     animation: slideUp 0.3s ease-out;
   }
-  
+
   .animate-fade-in {
     animation: fadeIn 0.4s ease-out;
   }

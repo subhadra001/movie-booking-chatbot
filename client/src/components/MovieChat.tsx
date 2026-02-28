@@ -31,7 +31,7 @@ export default function MovieChat() {
     handleSeatConfirm,
     handleBookingConfirm
   } = useChat();
-  
+
   const chatContainerRef = useRef<HTMLDivElement>(null);
 
   // Auto-scroll to bottom of chat on new messages or typing status change
@@ -60,7 +60,7 @@ export default function MovieChat() {
         {messages.map((message, index) => (
           <div key={index}>
             <MessageBubble message={message} />
-            
+
             {/* Display UI components based on message type */}
             {message.sender === 'agent' && message.type === 'movie_results' && (
               <>
@@ -73,18 +73,18 @@ export default function MovieChat() {
                 ))}
               </>
             )}
-            
+
             {message.sender === 'agent' && message.type === 'showtime_results' && currentMovie && (
               <ShowtimeSelector 
                 showtimes={message.data?.showtimes} 
                 onSelect={handleShowtimeSelect} 
               />
             )}
-            
+
             {message.sender === 'agent' && message.type === 'seat_selection' && (
               <TicketQuantitySelector onSelect={handleTicketQuantitySelect} />
             )}
-            
+
             {message.sender === 'agent' && message.type === 'ticket_quantity' && ticketQuantity > 0 && (
               <SeatSelection 
                 showtimeId={currentShowtime?.id} 
@@ -94,7 +94,7 @@ export default function MovieChat() {
                 onConfirm={handleSeatConfirm}
               />
             )}
-            
+
             {message.sender === 'agent' && message.type === 'booking_confirmation' && (
               <>
                 <BookingSummary 
@@ -104,11 +104,11 @@ export default function MovieChat() {
                   seats={selectedSeats}
                   ticketQuantity={ticketQuantity}
                 />
-                
+
                 {currentTheater && (
                   <TheaterInfo theater={currentTheater} />
                 )}
-                
+
                 <QuickActionButtons
                   options={[
                     { text: 'Find food nearby', onClick: () => sendMessage('Find food nearby') },
@@ -118,7 +118,7 @@ export default function MovieChat() {
                 />
               </>
             )}
-            
+
             {message.sender === 'agent' && message.type === 'general' && index === 0 && (
               <QuickActionButtons
                 options={[
@@ -128,7 +128,7 @@ export default function MovieChat() {
                 ]}
               />
             )}
-            
+
             {/* Show quick replies when available */}
             {message.sender === 'agent' && quickReplies.length > 0 && index === messages.length - 1 && !isTyping && (
               <QuickActionButtons options={quickReplies} />

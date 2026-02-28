@@ -8,7 +8,7 @@ interface MessageBubbleProps {
 
 export default function MessageBubble({ message }: MessageBubbleProps) {
   const { sender, text } = message;
-  
+
   if (sender === "user") {
     return (
       <motion.div 
@@ -26,7 +26,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
       </motion.div>
     );
   }
-  
+
   return (
     <motion.div 
       className="flex items-end mb-4"

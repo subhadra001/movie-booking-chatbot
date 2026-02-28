@@ -10,13 +10,13 @@ export default function ChatInput({ onSendMessage }: ChatInputProps) {
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    
+
     if (message.trim()) {
       onSendMessage(message);
       setMessage("");
     }
   };
-  
+
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
