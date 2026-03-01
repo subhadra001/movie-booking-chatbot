@@ -6,7 +6,6 @@ A conversational movie ticket booking web application that allows users to disco
 ## Application Preview
 
 | Chat Interface |
-|---------------|
  <p align="left">
   <a href="images/start_chat.png">
     <img src="images/start_chat.png" width="250">
@@ -27,19 +26,22 @@ A conversational movie ticket booking web application that allows users to disco
   </a>
 </p>
 
+<table>
+<tr>
+<td align="center">
+
 | Seat Selection |
-<p align="left">
   <a href="images/select_seat.png">
     <img src="images/select_seat.png" width="250">
   </a>
-</p>
 
 | Ticket Confirmation |
-<p align="left">
   <a href="images/ticket.png">
     <img src="images/ticket.png" width="250">
   </a>
-</p>
+</td>
+</tr>
+</table>
 
 ## Features
 - Natural language chat interface for movie queries
