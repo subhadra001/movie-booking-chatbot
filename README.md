@@ -49,6 +49,7 @@ A conversational movie ticket booking web application that allows users to disco
 
 </tr>
 </table>
+</table>
 
 ## Features
 - Natural language chat interface for movie queries
