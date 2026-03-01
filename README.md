@@ -32,7 +32,7 @@ A conversational movie ticket booking web application that allows users to disco
 </tr>
 
 <tr>
-<td></td>
+<td colspan="3"></td>
 
 <td align="center">
 <b>Seat Selection</b><br>
