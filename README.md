@@ -11,17 +11,17 @@ A conversational movie ticket booking web application that allows users to disco
 <tr>
 <td align="center">
 <b>Chat Interface</b><br>
-<img src="images/start_chat.png" width="260">
+<img src="images/start_chat.png" width="200">
 </td>
 
 <td align="center">
 <b>Movie Discovery</b><br>
-<img src="images/show_movies.png" width="260">
+<img src="images/show_movies.png" width="200">
 </td>
 
 <td align="center">
 <b>Timing Selection</b><br>
-<img src="images/select_timing.png" width="260">
+<img src="images/select_timing.png" width="200">
 </td>
 </tr>
 
@@ -32,12 +32,12 @@ A conversational movie ticket booking web application that allows users to disco
 <tr>
 <td align="center">
 <b>Seat Selection</b><br>
-<img src="images/select_seat.png" width="260">
+<img src="images/select_seat.png" width="200">
 </td>
 
 <td align="center">
 <b>Ticket Confirmation</b><br>
-<img src="images/ticket.png" width="260">
+<img src="images/ticket.png" width="200">
 </td>
 </tr>
 </table>
