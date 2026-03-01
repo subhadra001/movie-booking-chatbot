@@ -2,6 +2,24 @@
 
 A conversational movie ticket booking web application that allows users to discover movies, select showtimes, reserve seats, and generate a digital ticket through a chat interface.
 
+## Application Preview
+
+### Chat Interface
+![Chat](images/start_chat.png)
+
+### Movie Discovery
+![Movies](images/show_movies.png)
+
+### Seat Selection
+![timing](images/select_timing.png)
+
+### Seat Selection
+![Seats](images/select_seat.png)
+
+### Ticket Confirmation
+![Ticket](images/ticket.png)
+
+
 ## Features
 - Natural language chat interface for movie queries
 - Browse new releases and popular movies
