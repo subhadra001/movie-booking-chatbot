@@ -30,16 +30,23 @@ A conversational movie ticket booking web application that allows users to disco
 <tr>
 <td align="center">
 
-| Seat Selection |
-  <a href="images/select_seat.png">
-    <img src="images/select_seat.png" width="250">
-  </a>
+<table>
+<tr>
 
-| Ticket Confirmation |
-  <a href="images/ticket.png">
-    <img src="images/ticket.png" width="250">
-  </a>
+<td align="center">
+<b>Seat Selection</b><br>
+<a href="images/select_seat.png">
+  <img src="images/select_seat.png" width="330">
+</a>
 </td>
+
+<td align="center">
+<b>Ticket Confirmation</b><br>
+<a href="images/ticket.png">
+  <img src="images/ticket.png" width="330">
+</a>
+</td>
+
 </tr>
 </table>
 
