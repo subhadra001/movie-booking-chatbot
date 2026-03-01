@@ -7,24 +7,44 @@ A conversational movie ticket booking web application that allows users to disco
 
 ## Application Preview
 
-<p align="center">
-
+<table align="center">
+<tr>
+<td align="center">
 <b>Chat Interface</b><br>
-<img src="images/start_chat.png" width="220"><br><br>
+<img src="images/start_chat.png" width="260">
+</td>
 
+<td align="center">
 <b>Movie Discovery</b><br>
-<img src="images/show_movies.png" width="220"><br><br>
+<img src="images/show_movies.png" width="260">
+</td>
 
+<td align="center">
 <b>Timing Selection</b><br>
-<img src="images/select_timing.png" width="220"><br><br>
+<img src="images/select_timing.png" width="260">
+</td>
+</tr>
 
+<tr>
+<td align="center" colspan="3">
+
+<table>
+<tr>
+<td align="center">
 <b>Seat Selection</b><br>
-<img src="images/select_seat.png" width="220"><br><br>
+<img src="images/select_seat.png" width="260">
+</td>
 
+<td align="center">
 <b>Ticket Confirmation</b><br>
-<img src="images/ticket.png" width="220">
+<img src="images/ticket.png" width="260">
+</td>
+</tr>
+</table>
 
-</p>
+</td>
+</tr>
+</table>
 
 ## Features
 - Natural language chat interface for movie queries
