@@ -8,7 +8,7 @@ A conversational movie ticket booking web application that allows users to disco
 ## Chat Interface
 <p align="center">
   <a href="images/start_chat.png">
-    <img src="images/start_chat.png" width="450">
+    <img src="images/start_chat.png" width="250">
   </a>
 </p>
 
