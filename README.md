@@ -7,7 +7,9 @@ A conversational movie ticket booking web application that allows users to disco
 
 | Chat Interface |
 |---------------|
-| <img src="images/start_chat.png"> |
+| <p align="center">
+ <a href="images/start_chat.png">
+<img src="images/start_chat.png"> </a> </p>|
 
 | Movie Discovery |
 |---------------|
