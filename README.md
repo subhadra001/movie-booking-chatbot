@@ -32,6 +32,8 @@ A conversational movie ticket booking web application that allows users to disco
 </tr>
 
 <tr>
+<td></td>
+
 <td align="center">
 <b>Seat Selection</b><br>
 <a href="images/select_seat.png">
@@ -45,8 +47,6 @@ A conversational movie ticket booking web application that allows users to disco
 <img src="images/ticket.png" width="250">
 </a>
 </td>
-
-<td></td>
 </tr>
 </table>
 
